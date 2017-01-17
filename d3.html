@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+body {
+  background: #fff;
+}
+.item {
+  fill: #333;
+  stroke-width: 1.5;
+}
+.item--transitioning {
+  fill: none;
+}
+</style>
+<body>
+<script src="assets/js/d3.v3.min.js"></script>
+<script src="assets/js/react-with-addons-0.13.3.js"></script>
+<script src="assets/js/JSXTransformer-0.13.3.js"></script>
+<script>
+var width = 960,
+    height = 500,
+    data = [];
+var x = d3.scale.linear()
+  .domain([0, 1])
+  .range([0, width]);
+var y = d3.scale.linear()
+  .domain([0, 1])
+  .range([150, height - 150]);
+var r = d3.scale.sqrt()
+  .domain([0, 1])
+  .range([0, 30]);
+var circle = React.createClass({
+  componentDidMount: function() {
+    d3.select(this.getDOMNode())
+      .classed('item--transitioning', true)
+      .style('stroke', '#3E6E9C')
+    .transition().duration(1000)
+      .style('stroke', '#D8E467')
+      .attr('cy', y(this.props.y));
+  },
+  componentWillLeave: function(done) {
+    d3.select(this.getDOMNode())
+    .transition().duration(1000)
+      .style('stroke', '#3E6E9C')
+      .attr('cy', height)
+      .each('end', done);
+  },
+  render: function() {
+    return React.DOM.circle({
+      className: 'item',
+      cx: x(this.props.x),
+      cy: 0,
+      r: r(this.props.r)
+    });
+  }
+});
+function render() {
+  React.renderComponent(
+    React.addons.TransitionGroup(
+      {
+        transitionName: 'circles',
+        component: React.DOM.svg,
+        width: width,
+        height: height
+      },
+      data.map(circle) 
+    ),
+    document.body
+  );
+}
+var circlesCreated = 0;
+function add() {
+  data.push({key: Date.now(), x: Math.random(), y: Math.random(), r: Math.random()});
+  render();
+  setTimeout(data.length < 100 ? add : remove, 5);
+}
+function remove() {
+  data = data.slice(1);
+  render();
+  if (++circlesCreated === 1000) console.timeEnd('1000 circles');
+  setTimeout(data.length > 0 ? remove : add, 5);
+}
+console.time('1000 circles');
+add();
+</script>

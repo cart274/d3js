@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>D3JS</title>
+  <script src="assets/js/d3.v3.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="assets/css/prueba3.css">
+</head>
+<style type="text/css">
+
+</style>
+<body>
+<a href="#" onclick="muestra_video()">click</a>
+<div class="cont_video">
+  <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 600" width="500px" height="600px" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <mask id="mask" x="0" y="0" width="600" height="500" >
+        <rect x="0" y="0" width="500" height="600"/>
+        <circle r="0" cx="250" cy="300" fill="#000" stroke="#000" stroke-width="10"/>
+      </mask>
+    </defs>
+    <rect x="0" y="0" width="500" height="600"/>
+  </svg>
+  <video id="video"  muted="muted" preload="auto" loop="loop">
+      <source src="assets/video/video1.mp4" type="video/mp4">
+      <source src="http://mazwai.com/system/posts/videos/000/000/123/webm/victor_ciurus--5d_mark_iii_magic_lantern_14_bits_raw_video.webm?1412890624" type="video/webm">
+  </video>
+</div>
+
+
+
+<div class="cont_video2">
+  <video id="video"  muted="muted" preload="auto" loop="loop" width="0" height="0">
+      <source src="assets/video/video1.mp4" type="video/mp4">
+      <source src="http://mazwai.com/system/posts/videos/000/000/123/webm/victor_ciurus--5d_mark_iii_magic_lantern_14_bits_raw_video.webm?1412890624" type="video/webm">
+  </video>
+</div>
+</body>
+
+<script src="assets/js/prueba3.js"></script>
